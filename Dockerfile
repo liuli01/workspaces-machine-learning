@@ -1,4 +1,4 @@
-FROM kasmweb/ubuntu-focal-dind-rootless:develop
+FROM kasmweb/core-ubuntu-focal:develop
 
 USER root
 
@@ -13,8 +13,12 @@ RUN apt-get update && apt-get install -y \
         python3-pip libasound2 libegl1-mesa libgl1-mesa-glx \
         libxcomposite1 libxcursor1 libxi6 libxrandr2 libxss1 \
         libxtst6 gdal-bin ffmpeg vlc dnsutils iputils-ping \
-        git remmina remmina-plugin-rdp
-
+        git remmina remmina-plugin-rdp fcitx fcitx-pinyin
+# add sudo and set nopassword
+RUN apt-get update \
+    && apt-get install -y sudo \
+    && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
+    && rm -rf /var/lib/apt/list/*
 
 # Install Visual Studio Code
 #install VS code
